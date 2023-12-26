@@ -42,6 +42,8 @@ __attribute__((format(printf, 1, 2))) static void ar_log(const char *format, ...
 
 static int ar_launch(void)
 {
+  char *const c = malloc(1024);
+
 	pid_t pid = fork();
 	if (pid == 0) {
 		/*
@@ -54,7 +56,6 @@ static int ar_launch(void)
 		 * const char *argv1[] = { AUTORANDR_PATH, "--change", "--default", "default", NULL};
 		 */
 		const char * argv1[] = { AUTORANDR_PATH, "--change", "--default", "default", NULL};
-		char *const c = malloc(sizeof argv1);
 		memcpy(c, argv1, sizeof argv1);
 
 		/*
@@ -99,6 +100,7 @@ static int ar_launch(void)
 		exit(127);
 	} else {
 		waitpid(pid, 0, 0);
+		puts("now free");
 		/*
 		 * free(c);
 		 */
