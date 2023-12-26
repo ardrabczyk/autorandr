@@ -44,8 +44,53 @@ static int ar_launch(void)
 {
 	pid_t pid = fork();
 	if (pid == 0) {
-		static char *argv[] = { AUTORANDR_PATH, "--change", "--default", "default", NULL};
-		if (execve(argv[0], argv, environ) == -1) {
+		/*
+		 * const char *argv1[] = { AUTORANDR_PATH, "--change", "--default", "default", NULL};
+		 */
+		/*
+		 * char arg0[] = AUTORANDR_PATH;
+		 * char *cmd2[] = {"--change", "--default", "default", NULL};
+		 * const char  *arg1 = strdup( cmd2 );
+		 * const char *argv1[] = { AUTORANDR_PATH, "--change", "--default", "default", NULL};
+		 */
+		const char * argv1[] = { AUTORANDR_PATH, "--change", "--default", "default", NULL};
+		char *const c = malloc(sizeof argv1);
+		memcpy(c, argv1, sizeof argv1);
+
+		/*
+		 * char * real_args[7];
+		 * real_args[0] = argv1[0];
+		 * real_args[1] = argv1[1];
+		 */
+
+
+		/*
+		 * char  *const to_pass = strdup(argv1);
+		 *
+		 * char *argv_final[] = { AUTORANDR_PATH, to_pass, NULL };
+		 */
+
+		/*
+		 * char *argv1 = { AUTORANDR_PATH, "--change", "--default", "default", NULL};
+		 */
+
+		/*
+		 * char argv1[] = { NULL, "hello", "world", NULL };
+		 */
+		/*
+		 * if (execve(argv1[0], argv1, environ) == -1) {
+		 */
+		/*
+		 * if (execve(argv1[0], (const char* const*) argv1, environ) == -1) {
+		 */
+		if (execve(argv1[0], &c, environ) == -1) {
+		/*
+		 * if (execve(argv1[0], to_pass, environ) == -1) {
+		 */
+		/*
+		 * if (execve(argv1[0], argv_final, environ) == -1) {
+		 */
+
         	int errsv = errno;
 			fprintf(stderr, "Error executing file: %s\n", strerror(errsv));
 			exit(errsv);
@@ -158,8 +203,10 @@ int main(int argc, char **argv)
 		      evt->response_type &
 		       XCB_RANDR_NOTIFY_MASK_SCREEN_CHANGE);
 
-		if (evt->response_type &
-		    XCB_RANDR_NOTIFY_MASK_SCREEN_CHANGE) {
+		if (evt->response_type) {
+		    /*
+		     * XCB_RANDR_NOTIFY_MASK_SCREEN_CHANGE) {
+		     */
 			xcb_randr_screen_change_notify_event_t *randr_evt =
 			    (xcb_randr_screen_change_notify_event_t *) evt;
 			time_t evt_time = time(NULL);
