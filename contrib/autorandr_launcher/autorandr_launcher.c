@@ -94,12 +94,14 @@ static int ar_launch(void)
         	int errsv = errno;
 			fprintf(stderr, "Error executing file: %s\n", strerror(errsv));
 			exit(errsv);
-        }
+		}
 
 		exit(127);
 	} else {
 		waitpid(pid, 0, 0);
+		free(c);
 	}
+	
 	return 0;
 }
 
