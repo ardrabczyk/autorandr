@@ -99,7 +99,9 @@ static int ar_launch(void)
 		exit(127);
 	} else {
 		waitpid(pid, 0, 0);
-		free(c);
+		/*
+		 * free(c);
+		 */
 	}
 	
 	return 0;

@@ -1,4 +1,4 @@
-CFLAGS  = -pipe \
+CFLAGS  = -g -pipe \
 	-o2 \
 	-Wstrict-overflow=5 -fstack-protector-all \
 	-W -Wall -Wextra \
